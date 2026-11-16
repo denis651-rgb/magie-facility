@@ -1,0 +1,36 @@
+name: Verificación inicial
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  entorno:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verificar herramientas
+        run: |
+          node --version
+          npm --version
+          git --version
+          docker info --format '{{.ServerVersion}}'
+      - name: Verificar documentación y exclusión de credenciales
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in docs/requirements.md docs/architecture.md docs/database.md .env.example; do
+            test -s "$file"
+          done
+          git check-ignore --quiet -- .env
+          git check-ignore --quiet -- .env.local
+          git check-ignore --quiet -- .env.production
+          if git ls-files -- '.env*' ':(exclude).env.example' | grep .; then
+            echo 'Se detectó un archivo de entorno versionado.'
+            exit 1
+          fi
+          git diff-tree --root --check -r HEAD
