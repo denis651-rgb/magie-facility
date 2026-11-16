@@ -1,44 +1,20 @@
-# Fases 1 y 2 — Entorno e instalación
+# Fase 2 — Next.js, Payload y PostgreSQL
 
-## 1. Verificar herramientas
-```powershell
-node --version
-npm --version
-git --version
-```
-Usar versión de Node.js compatible con la documentación oficial **en la fecha de instalación**.
+La aplicación se basa en la plantilla oficial Blank de Payload. El panel usa español como idioma de interfaz. La configuración de contenidos admite español y alemán. La base local tiene almacenamiento persistente y las tablas se crean mediante migraciones versionadas.
 
-Verificar también el motor con `docker info`. En Windows, iniciar Docker Desktop si el motor no responde. La comprobación de GitHub Actions verifica las herramientas y que los archivos de entorno estén excluidos.
+## Comprobación local
 
-## 2. Fase 2 — Crear app Payload oficial
-Este ZIP **no contiene dependencias instaladas**. Para evitar conflictos, usar el asistente oficial de Payload en una carpeta temporal junto a la de documentación:
-```powershell
-cd C:\Proyectos
-npx create-payload-app
-```
-Escoger proyecto nuevo, Postgres y plantilla compatible; revisar opciones del asistente. **No instalar sobre carpetas de scaffold existentes sin revisar previamente los archivos que el asistente crea.**
+Sigue los comandos del [README](../README.md) para instalar dependencias, iniciar la base y aplicar las migraciones.
 
-## 3. Integrar modelo
-- Copiar/adaptar las colecciones desde `src/collections` y globales desde `src/globals`.
-- Integrar `src/access`, `src/lib`, `src/i18n` y componentes según el proyecto generado.
-- Registrar las colecciones en `payload.config.ts` oficial.
-- Mantener las rutas `(payload)` que genere la plantilla.
-- Configurar `DATABASE_URL` y `PAYLOAD_SECRET` en `.env.local`.
-- Crear y verificar migraciones de PostgreSQL.
+1. Abre `/admin`, crea el primer administrador y comprueba que ves el panel en español.
+2. Cierra sesión y vuelve a iniciar sesión con la misma cuenta.
+3. Reinicia PostgreSQL con `docker compose --env-file .env.local restart postgres`. Cuando la base vuelva a estar disponible, vuelve a iniciar sesión con la cuenta anterior.
+4. Ejecuta `npm.cmd run typecheck` y `npm.cmd run build` para verificar el proyecto.
 
-## 4. Primer arranque
-```powershell
-npm install
-npm run dev
-```
-Solo ejecutar estos comandos **dentro del proyecto oficial generado**, después de instalar/configurar PostgreSQL. El gestor de paquetes depende de las opciones escogidas.
+## Siguientes fases
 
-## 5. Validación
-- Abrir el frontend local y `/admin`.
-- Crear usuario administrador inicial.
-- Crear categoría, servicio y traducciones de prueba.
-- Verificar permisos, visibilidad pública y enlace de WhatsApp.
+- Fase 3: definir la autorización por operación para el rol Administrador y verificar las denegaciones.
+- Fase 4: completar las colecciones y ajustes del catálogo, multimedia y páginas, y validar las reglas de borradores y publicación.
+- Fases 5 a 7: construir las páginas públicas, la alternancia de idiomas y la integración de WhatsApp.
 
-Referencias oficiales:
-- https://payloadcms.com/docs/getting-started/installation
-- https://payloadcms.com/docs/database/postgres
+Referencias: [Instalación de Payload](https://payloadcms.com/docs/getting-started/installation), [PostgreSQL](https://payloadcms.com/docs/database/postgres) y [migraciones](https://payloadcms.com/docs/database/migrations).

@@ -1,34 +1,25 @@
-# MAGIE FACILITY SERVICE C&D — Sitio web corporativo
+# MAGIE FACILITY SERVICE C&D
 
-**Estado:** Fase 0 cerrada en alcance y decisiones. Pendiente iniciar el entorno técnico. Este paquete es un **scaffold documental y de código inicial**, no una aplicación instalada ni ejecutable aún.
+Sitio corporativo para una empresa de limpieza y mantenimiento en Suiza. La primera versión contempla catálogo, trabajos, páginas corporativas en español y alemán y presupuestos por WhatsApp.
 
-## Objetivo
-Sitio corporativo para una empresa de limpieza y servicios en Suiza. Catálogo con categorías, servicios, trabajos realizados, páginas corporativas, dos idiomas (es/de) y solicitud de presupuesto mediante WhatsApp. Panel editorial con Payload CMS.
+La base técnica utiliza Next.js, Payload CMS y PostgreSQL. El panel en español está en `/admin`. El alcance editorial y las páginas públicas están descritos en [los requisitos](docs/requirements.md).
 
-## Tecnologías previstas
-- Next.js + TypeScript (App Router)
-- Payload CMS
-- PostgreSQL
-- Español (`es`) por defecto, alemán (`de`) opcional
-- WhatsApp mediante enlace `wa.me` (sin checkout ni pagos)
+## Arranque local en Windows
 
-## Primeros pasos en Windows
-1. Extraer el ZIP, por ejemplo en `C:\Proyectos\magie-facility-web`.
-2. Abrir PowerShell en la carpeta y ejecutar `code .`.
-3. Leer `docs/requirements.md`, `docs/architecture.md` y `docs/database.md`.
-4. Revisar `docs/decisions.md` y completar las decisiones pendientes.
-5. **No ejecutar `npm install` en este paquete:** todavía no incluye `package.json` ni la plantilla oficial de Payload.
-6. Cuando se apruebe el análisis, inicializar Next.js + Payload **con la plantilla oficial** (preferiblemente en una carpeta temporal), y transferir los archivos de `src/` y `docs/` al proyecto generado, ajustando las rutas. Consultar `docs/next-steps.md`.
+Requisitos: Docker Desktop, Git, npm y Node.js compatible con `package.json` (22.23.4 o posterior de la rama 22, o 24.22.1 o posterior). Inicia Docker Desktop antes de ejecutar los comandos.
 
-## ¿Qué incluye este paquete?
-- Arquitectura propuesta y documentación de requisitos.
-- Modelo lógico de datos con campos, relaciones y reglas.
-- Mapa de páginas, matriz de permisos, criterios de aceptación y fases.
-- Ejemplos de colecciones, globals, i18n, utilidades y componentes de Next.js/Payload en `src/`.
-- `.env.example`, `.gitignore`, plantillas de pruebas y directorios de trabajo.
+1. Copia `.env.example` a `.env.local`. Pon la misma contraseña alfanumérica en `POSTGRES_PASSWORD` y dentro de `DATABASE_URL`. Genera un valor independiente para `PAYLOAD_SECRET`. Puedes generar cada valor con `node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"`.
+2. Desde la raíz del proyecto, ejecuta:
 
-## Advertencias
-- El código incluido es de partida y **no está integrado ni probado** contra una instalación concreta de Payload.
-- No se incluyen logos, fotos, claves ni datos privados del cliente.
-- Los textos, fotografías, categorías e información legal de ejemplo deben sustituirse y validarse antes de publicar.
-- La estructura física SQL será generada por el adaptador de Payload y sus migraciones; `docs/database.md` describe el modelo lógico.
+   ```powershell
+   npm.cmd ci
+   docker compose --env-file .env.local up -d --wait
+   npm.cmd run payload -- migrate
+   npm.cmd run dev
+   ```
+
+3. Abre [el panel local](http://localhost:3000/admin) y crea tu cuenta de Administrador desde el formulario inicial.
+
+PostgreSQL escucha en `127.0.0.1:55432`. Docker conserva los datos en un volumen local al detener e iniciar el servicio. Mantén los valores de `.env.local` para volver a conectar con la base existente.
+
+El [registro de decisiones](docs/decisions.md) y la [guía técnica](docs/next-steps.md) describen el alcance y los pasos pendientes.

@@ -1,5 +1,4 @@
 # Rutas de Next.js
 
-Los directorios `(frontend)` y `(payload)` representan la organización objetivo. **No contienen la implementación oficial de rutas de Payload** y no deben usarse como reemplazo de los archivos generados por `create-payload-app`.
-
-La estructura de segmentos localizados debe ajustarse a la estrategia de rutas y slugs traducidos acordada.
+- `(frontend)` contiene la página pública de inicio. Los segmentos localizados quedan reservados para la implementación del catálogo y las páginas corporativas.
+- `(payload)` contiene las rutas oficiales del panel `/admin` y la API de Payload. Next.js sirve ambos grupos desde el mismo proceso.

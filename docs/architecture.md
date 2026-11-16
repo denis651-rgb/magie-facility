@@ -12,7 +12,7 @@ CTA WhatsApp        → https://wa.me/<numero>?text=<mensaje>
 
 ## Organización
 - `src/app/(frontend)/[locale]`: rutas públicas localizadas.
-- `src/app/(payload)`: carpeta reservada para rutas oficiales generadas por Payload.
+- `src/app/(payload)`: rutas oficiales de Payload para el panel y la API.
 - `src/collections`: entidades con múltiples registros.
 - `src/globals`: configuración singular (empresa, sitio, navegación).
 - `src/blocks`: secciones editables de páginas.
@@ -51,8 +51,8 @@ CTA WhatsApp        → https://wa.me/<numero>?text=<mensaje>
 - Entornos: local, staging opcional y producción.
 - CI: lint/typecheck/tests, migraciones controladas y despliegue.
 
-## Decisión sobre bootstrap
-No sobrescribir el setup oficial de Payload con código no verificado. Crear la app mediante `npx create-payload-app` en carpeta limpia, seleccionar Postgres y trasladar el modelo de este scaffold. Ver `docs/next-steps.md`.
+## Base técnica
+La aplicación integra la plantilla oficial Blank de Payload y el adaptador PostgreSQL. El entorno local usa Docker Compose y migraciones versionadas. Ver `docs/next-steps.md`.
 
 ## Ampliación del sistema
 

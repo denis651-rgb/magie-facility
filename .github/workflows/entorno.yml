@@ -34,3 +34,7 @@ jobs:
             exit 1
           fi
           git diff-tree --root --check -r HEAD
+      - name: Instalar dependencias
+        run: npm ci
+      - name: Verificar tipos
+        run: npm run typecheck
