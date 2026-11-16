@@ -13,7 +13,7 @@ Sigue los comandos del [README](../README.md) para instalar dependencias, inicia
 
 ## Siguientes fases
 
-- Fase 3: definir la autorización por operación para el rol Administrador y verificar las denegaciones.
+- Fase 3 completada localmente: autorización del Administrador por operación, acceso público a versiones publicadas e invalidación de sesiones al desactivar una cuenta. Ver [permisos](permissions.md).
 - Fase 4: completar las colecciones y ajustes del catálogo, multimedia y páginas, y validar las reglas de borradores y publicación.
 - Fases 5 a 7: construir las páginas públicas, la alternancia de idiomas y la integración de WhatsApp.
 

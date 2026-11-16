@@ -189,7 +189,7 @@ export interface Media {
 export interface ServiceCategory {
   id: number;
   name: string;
-  slug: string;
+  slug?: string | null;
   description?: string | null;
   parent?: (number | null) | ServiceCategory;
   image?: (number | null) | Media;
@@ -205,7 +205,7 @@ export interface ServiceCategory {
 export interface Service {
   id: number;
   title: string;
-  slug: string;
+  slug?: string | null;
   summary?: string | null;
   description?: {
     root: {
@@ -246,7 +246,7 @@ export interface Service {
 export interface Project {
   id: number;
   title: string;
-  slug: string;
+  slug?: string | null;
   summary?: string | null;
   services?: (number | Service)[] | null;
   gallery?: (number | Media)[] | null;
@@ -262,7 +262,7 @@ export interface Project {
 export interface Page {
   id: number;
   title: string;
-  slug: string;
+  slug?: string | null;
   seoTitle?: string | null;
   seoDescription?: string | null;
   updatedAt: string;
@@ -523,6 +523,13 @@ export interface CompanySetting {
   legalName?: string | null;
   logo?: (number | null) | Media;
   about?: string | null;
+  socialLinks?:
+    | {
+        platform: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   phone?: string | null;
   whatsapp?: string | null;
   email?: string | null;
@@ -572,6 +579,13 @@ export interface CompanySettingsSelect<T extends boolean = true> {
   legalName?: T;
   logo?: T;
   about?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
   phone?: T;
   whatsapp?: T;
   email?: T;

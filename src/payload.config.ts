@@ -22,6 +22,14 @@ const srcDir = path.dirname(fileURLToPath(import.meta.url))
 export default buildConfig({
   admin: {
     user: Users.slug,
+    theme: 'light',
+    components: {
+      beforeDashboard: ['@/components/layout/AdminShortcuts'],
+      graphics: {
+        Icon: '@/components/layout/AdminBrand#AdminIcon',
+        Logo: '@/components/layout/AdminBrand#AdminLogo',
+      },
+    },
     importMap: { baseDir: srcDir },
   },
   collections: [Users, Media, ServiceCategories, Services, Projects, Pages],
