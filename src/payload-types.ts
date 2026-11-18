@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    'external-media': ExternalMedia;
     'service-categories': ServiceCategory;
     services: Service;
     projects: Project;
@@ -82,6 +83,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'external-media': ExternalMediaSelect<false> | ExternalMediaSelect<true>;
     'service-categories': ServiceCategoriesSelect<false> | ServiceCategoriesSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
@@ -94,7 +96,8 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('es' | 'de') | ('es' | 'de')[];
+  fallbackLocale:
+    ('false' | 'none' | 'null') | false | null | ('es' | 'de' | 'fr' | 'it') | ('es' | 'de' | 'fr' | 'it')[];
   globals: {
     'company-settings': CompanySetting;
     navigation: Navigation;
@@ -105,7 +108,7 @@ export interface Config {
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
-  locale: 'es' | 'de';
+  locale: 'es' | 'de' | 'fr' | 'it';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -184,6 +187,20 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "external-media".
+ */
+export interface ExternalMedia {
+  id: number;
+  title: string;
+  /**
+   * Pega el enlace HTTPS de la publicación. El archivo seguirá alojado en la plataforma original.
+   */
+  url: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "service-categories".
  */
 export interface ServiceCategory {
@@ -206,6 +223,10 @@ export interface Service {
   id: number;
   title: string;
   slug?: string | null;
+  /**
+   * Selecciona el grupo al que pertenece este servicio.
+   */
+  category: number | ServiceCategory;
   summary?: string | null;
   description?: {
     root: {
@@ -228,9 +249,15 @@ export interface Service {
         id?: string | null;
       }[]
     | null;
-  category: number | ServiceCategory;
   coverImage?: (number | null) | Media;
   gallery?: (number | Media)[] | null;
+  /**
+   * Selecciona los enlaces que quieras asociar a esta ficha.
+   */
+  externalMedia?: (number | ExternalMedia)[] | null;
+  /**
+   * Marca esta opción si quieres que el servicio pueda aparecer entre los destacados.
+   */
   featured?: boolean | null;
   sortOrder?: number | null;
   seoTitle?: string | null;
@@ -250,6 +277,10 @@ export interface Project {
   summary?: string | null;
   services?: (number | Service)[] | null;
   gallery?: (number | Media)[] | null;
+  /**
+   * Selecciona los enlaces que quieras asociar a esta ficha.
+   */
+  externalMedia?: (number | ExternalMedia)[] | null;
   featured?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -261,8 +292,60 @@ export interface Project {
  */
 export interface Page {
   id: number;
+  pageDesign?: ('standard' | 'about') | null;
+  about?: {
+    bannerTitle?: string | null;
+    bannerSubtitle?: string | null;
+    introTitle?: string | null;
+    /**
+     * Si lo dejas vacío, se muestra el Contenido que ya escribiste en esta página.
+     */
+    introText?: string | null;
+    firstImage?: (number | null) | Media;
+    secondImage?: (number | null) | Media;
+    buttonLabel?: string | null;
+    valuesTitle?: string | null;
+    values?:
+      | {
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+    purposeTitle?: string | null;
+    missionTitle?: string | null;
+    mission?: string | null;
+    visionTitle?: string | null;
+    vision?: string | null;
+    /**
+     * Hasta que marques esta opción se mostrará una nota de contenido provisional.
+     */
+    approved?: boolean | null;
+  };
+  /**
+   * Añade automáticamente los servicios publicados, sus fotos y el enlace a cada ficha después del contenido de esta página.
+   */
+  showServices?: boolean | null;
   title: string;
   slug?: string | null;
+  heroImage?: (number | null) | Media;
+  /**
+   * Escribe el texto de la página. Puedes usar títulos, listas y enlaces. Guarda un borrador o publica cuando esté lista.
+   */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   seoTitle?: string | null;
   seoDescription?: string | null;
   updatedAt: string;
@@ -300,6 +383,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'external-media';
+        value: number | ExternalMedia;
       } | null)
     | ({
         relationTo: 'service-categories';
@@ -406,6 +493,16 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "external-media_select".
+ */
+export interface ExternalMediaSelect<T extends boolean = true> {
+  title?: T;
+  url?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "service-categories_select".
  */
 export interface ServiceCategoriesSelect<T extends boolean = true> {
@@ -426,6 +523,7 @@ export interface ServiceCategoriesSelect<T extends boolean = true> {
 export interface ServicesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  category?: T;
   summary?: T;
   description?: T;
   benefits?:
@@ -434,9 +532,9 @@ export interface ServicesSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
-  category?: T;
   coverImage?: T;
   gallery?: T;
+  externalMedia?: T;
   featured?: T;
   sortOrder?: T;
   seoTitle?: T;
@@ -455,6 +553,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   summary?: T;
   services?: T;
   gallery?: T;
+  externalMedia?: T;
   featured?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -465,8 +564,36 @@ export interface ProjectsSelect<T extends boolean = true> {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
+  pageDesign?: T;
+  about?:
+    | T
+    | {
+        bannerTitle?: T;
+        bannerSubtitle?: T;
+        introTitle?: T;
+        introText?: T;
+        firstImage?: T;
+        secondImage?: T;
+        buttonLabel?: T;
+        valuesTitle?: T;
+        values?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+        purposeTitle?: T;
+        missionTitle?: T;
+        mission?: T;
+        visionTitle?: T;
+        vision?: T;
+        approved?: T;
+      };
+  showServices?: T;
   title?: T;
   slug?: T;
+  heroImage?: T;
+  content?: T;
   seoTitle?: T;
   seoDescription?: T;
   updatedAt?: T;
@@ -541,11 +668,31 @@ export interface CompanySetting {
   createdAt?: string | null;
 }
 /**
+ * Añade las páginas que quieres mostrar y arrastra las filas para ordenar el menú.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation".
  */
 export interface Navigation {
   id: number;
+  /**
+   * Elige la página publicada que se mostrará al abrir el sitio.
+   */
+  homePage?: (number | null) | Page;
+  menuItems?:
+    | {
+        destination: 'home' | 'services' | 'projects' | 'about' | 'contact' | 'page';
+        /**
+         * Elige una página creada para mostrar su contenido. Si lo dejas vacío, se abrirá la sección original.
+         */
+        page?: (number | null) | Page;
+        /**
+         * Déjalo vacío para usar automáticamente el nombre de la página.
+         */
+        menuLabel?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   headerLinks?:
     | {
         label: string;
@@ -563,6 +710,8 @@ export interface Navigation {
  */
 export interface SiteSetting {
   id: number;
+  whatsappGreeting?: string | null;
+  whatsappWelcome?: string | null;
   favicon?: (number | null) | Media;
   whatsappDefaultMessage?: string | null;
   seoDefaultTitle?: string | null;
@@ -602,6 +751,15 @@ export interface CompanySettingsSelect<T extends boolean = true> {
  * via the `definition` "navigation_select".
  */
 export interface NavigationSelect<T extends boolean = true> {
+  homePage?: T;
+  menuItems?:
+    | T
+    | {
+        destination?: T;
+        page?: T;
+        menuLabel?: T;
+        id?: T;
+      };
   headerLinks?:
     | T
     | {
@@ -619,6 +777,8 @@ export interface NavigationSelect<T extends boolean = true> {
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
+  whatsappGreeting?: T;
+  whatsappWelcome?: T;
   favicon?: T;
   whatsappDefaultMessage?: T;
   seoDefaultTitle?: T;

@@ -1,15 +1,17 @@
+const logo = '/images/magie-logo.jpg'
+
 export function AdminIcon() {
-  return <span className="magie-mark" aria-hidden="true">M</span>
+  return <img className="magie-mark" src={logo} alt="" width={24} height={24} />
 }
 
 export function AdminLogo() {
   return (
-    <span className="magie-brand">
-      <AdminIcon />
-      <span>
-        <strong>MAGIE</strong>
-        <small>Facility Service C&amp;D</small>
-      </span>
-    </span>
+    <img
+      className="magie-brand"
+      src={logo}
+      alt="MAGIE Facility Service C&D"
+      width={132}
+      height={132}
+    />
   )
 }

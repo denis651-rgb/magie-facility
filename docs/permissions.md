@@ -14,3 +14,7 @@ Administrador es el único rol privado en V1. Payload aplica la autorización en
 - El visitante puede leer categorías activas y versiones publicadas de servicios, trabajos y páginas. Las revisiones y el historial requieren una cuenta administrativa activa.
 - Las cuentas, la biblioteca multimedia y los ajustes globales requieren una cuenta administrativa activa. El sitio público expondrá únicamente los datos y archivos que sus páginas necesiten.
 - Desactivar una cuenta elimina sus sesiones. Volver a activarla requiere un nuevo inicio de sesión.
+
+## Inicio de sesión
+
+Tras cinco intentos fallidos se bloquea la cuenta durante 15 minutos. Los tokens nuevos vencen en una hora y la cookie usa `HttpOnly` y `SameSite=Lax`. En el VPS, configura `NEXT_PUBLIC_SERVER_URL` con la URL pública `https://` para activar también la marca `Secure`.

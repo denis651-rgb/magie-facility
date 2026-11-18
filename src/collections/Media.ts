@@ -6,11 +6,11 @@ export const Media: CollectionConfig = {
   slug: 'media',
   labels: { singular: 'Archivo multimedia', plural: 'Archivos multimedia' },
   access: { ...adminWrites, read: administratorOnly },
-  upload: { mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'] },
-  admin: { group: 'Contenido', useAsTitle: 'alt' },
+  upload: { pasteURL: false, mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'] },
+  admin: { hideAPIURL: true, group: 'Contenido', useAsTitle: 'alt' },
   fields: [
-    { name: 'alt', label: 'Texto alternativo', type: 'text', localized: true, required: true },
-    { name: 'credit', label: 'Crédito', type: 'text' },
+    { name: 'alt', label: 'Texto alternativo', type: 'text', localized: true, required: true, admin: { placeholder: 'Ej.: Oficina con escritorios limpios y ordenados' } },
+    { name: 'credit', label: 'Crédito', type: 'text', admin: { placeholder: 'Ej.: Foto de MAGIE Facility Service' } },
   ],
   // TODO: política de tamaño, almacenaje persistente y control de borrado.
 }

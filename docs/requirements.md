@@ -9,7 +9,7 @@ Permitir que visitantes conozcan la empresa MAGIE FACILITY SERVICE C&D, exploren
 - Nosotros, trabajos, contacto y páginas legales.
 - Panel editorial en español: empresa, navegación, categorías, servicios, trabajos, páginas y multimedia. Permite subir fotos y flyers y registrar enlaces de video.
 - Un único rol privado en V1: Administrador. Se podrán incorporar otros roles en versiones futuras.
-- Sitio público en español y alemán, con español como idioma inicial. El panel permanece en español al editar contenido en alemán.
+- Sitio público en español, alemán, francés e italiano, con español como idioma inicial. El panel permanece en español al editar contenido en cualquiera de los cuatro idiomas. Las traducciones de contenido se completan desde el CMS.
 - SEO por página/servicio: título, descripción, slug e imagen social opcional.
 - Enlaces de WhatsApp con texto contextual por servicio.
 - Diseño moderno e institucional, adaptable a móvil y escritorio, con accesibilidad básica y navegación con teclado.

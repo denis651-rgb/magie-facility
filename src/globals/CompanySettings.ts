@@ -5,7 +5,7 @@ import { administratorOnly } from '../access/roles'
 export const CompanySettings: GlobalConfig = {
   slug: 'company-settings',
   label: 'Datos de la empresa',
-  admin: { group: 'Configuración' },
+  admin: { hideAPIURL: true, group: 'Configuración' },
   access: { read: administratorOnly, update: administratorOnly },
   fields: [
     {

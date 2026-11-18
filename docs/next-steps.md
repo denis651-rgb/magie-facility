@@ -1,6 +1,6 @@
 # Fase 2 — Next.js, Payload y PostgreSQL
 
-La aplicación se basa en la plantilla oficial Blank de Payload. El panel usa español como idioma de interfaz. La configuración de contenidos admite español y alemán. La base local tiene almacenamiento persistente y las tablas se crean mediante migraciones versionadas.
+La aplicación se basa en la plantilla oficial Blank de Payload. El panel usa español como idioma de interfaz. La configuración de contenidos admite español, alemán, francés e italiano. El selector público enlaza traducciones publicadas del mismo documento y desactiva las que faltan. La base local tiene almacenamiento persistente y las tablas se crean mediante migraciones versionadas.
 
 ## Comprobación local
 

@@ -6,7 +6,7 @@ import { automaticSlugField, deriveSlugFrom } from '../hooks/automaticSlug'
 export const Services: CollectionConfig = {
   slug: 'services',
   labels: { singular: 'Servicio', plural: 'Servicios' },
-  admin: { group: 'Catálogo', useAsTitle: 'title' },
+  admin: { hideAPIURL: true, group: 'Catálogo', useAsTitle: 'title' },
   versions: { drafts: true },
   access: { ...adminWrites, read: publishedOrAdministrator, readVersions: administratorOnly },
   hooks: {
@@ -19,10 +19,11 @@ export const Services: CollectionConfig = {
       tabs: [
         {
           label: 'Contenido',
-          description: 'Describe el servicio y los beneficios que tendrá para el cliente.',
+          description: 'Escribe el título, selecciona una categoría y explica en qué consiste el servicio. Puedes guardar un borrador y completarlo más tarde.',
           fields: [
             { name: 'title', label: 'Título', type: 'text', localized: true, required: true },
             automaticSlugField,
+            { name: 'category', label: 'Categoría', type: 'relationship', relationTo: 'service-categories', required: true, admin: { description: 'Selecciona el grupo al que pertenece este servicio.' } },
             { name: 'summary', label: 'Resumen', type: 'textarea', localized: true },
             { name: 'description', label: 'Descripción', type: 'richText', localized: true },
             { name: 'benefits', label: 'Beneficios', type: 'array', localized: true, fields: [
@@ -31,14 +32,14 @@ export const Services: CollectionConfig = {
           ],
         },
         {
-          label: 'Catálogo e imágenes',
-          description: 'Elige dónde aparece en el catálogo y qué imágenes acompañan la ficha.',
+          label: 'Fotos y visibilidad',
+          description: 'Selecciona una foto principal y, si tienes más fotos del servicio, agrégalas a la galería.',
           fields: [
-            { name: 'category', label: 'Categoría', type: 'relationship', relationTo: 'service-categories', required: true },
             { name: 'coverImage', label: 'Imagen de portada', type: 'upload', relationTo: 'media' },
             { name: 'gallery', label: 'Galería', type: 'relationship', relationTo: 'media', hasMany: true },
-            { name: 'featured', label: 'Destacado', type: 'checkbox', defaultValue: false },
-            { name: 'sortOrder', label: 'Orden', type: 'number', defaultValue: 0 },
+            { name: 'externalMedia', label: 'Enlaces multimedia', type: 'relationship', relationTo: 'external-media', hasMany: true, admin: { description: 'Selecciona los enlaces que quieras asociar a esta ficha.' } },
+            { name: 'featured', label: 'Destacar en el sitio', type: 'checkbox', defaultValue: false, admin: { description: 'Marca esta opción si quieres que el servicio pueda aparecer entre los destacados.' } },
+            { name: 'sortOrder', label: 'Orden', type: 'number', defaultValue: 0, admin: { hidden: true, disableBulkEdit: true, disableListColumn: true, disableListFilter: true } },
           ],
         },
         {

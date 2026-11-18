@@ -19,41 +19,16 @@ html[data-theme='light'] {
   --accessibility-outline: 2px solid var(--magie-teal);
 }
 
-.magie-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  text-align: start;
-  color: var(--magie-navy);
-}
-
-.magie-brand strong,
-.magie-brand small {
-  display: block;
-}
-
-.magie-brand strong {
-  font-size: 1.7rem;
-  letter-spacing: .1em;
-  line-height: 1.15;
-}
-
-.magie-brand small {
-  margin-top: 4px;
-  font-size: .85rem;
-}
-
+.magie-brand,
 .magie-mark {
-  display: inline-grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: var(--magie-teal);
-  color: white;
-  font-size: 18px;
-  font-weight: 750;
+  display: block;
+  object-fit: contain;
+}
+
+.magie-brand {
+  margin-inline: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 .nav,
@@ -193,7 +168,9 @@ html[data-theme='light'] {
 .step-nav__home .magie-mark {
   width: 100%;
   height: 100%;
-  border-radius: 6px;
-  font-size: 13px;
-  line-height: 1;
+  border-radius: 3px;
+}
+
+.field-label > .localized {
+  display: none;
 }

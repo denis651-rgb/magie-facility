@@ -33,8 +33,8 @@ CTA WhatsApp        → https://wa.me/<numero>?text=<mensaje>
 ## Localización
 - Sitio público en `es` (predeterminado) y `de`. Interfaz de administración exclusivamente en español.
 - Campo `localized: true` para nombre, descripciones, slug cuando corresponda, SEO y textos.
-- Las URL públicas podrán usar prefijo `/es/` y `/de/`.
-- Requerir español completo para publicar. Para servir alemán, verificar sus campos obligatorios sin fallback desde español.
+- Las URL públicas usan los prefijos `/es/`, `/de/`, `/fr/` e `/it/`.
+- Requerir español completo para publicar. Para servir una traducción, verificar sus campos obligatorios sin fallback desde español. Ver `docs/languages.md`.
 
 ## Multimedia
 - Colección Media para fotos y flyers, con metadatos, texto alternativo, tamaño y formato. Los videos se gestionan mediante enlaces desde el panel.
@@ -44,7 +44,7 @@ CTA WhatsApp        → https://wa.me/<numero>?text=<mensaje>
 ## Publicación
 - Servicios, trabajos y páginas admiten borradores revisables por el administrador. Solo exponer contenido publicado al público y revalidar las páginas cuando se publique.
 - Previsualización restringida y logs de cambios críticos.
-- Validar los campos requeridos en español al publicar. Mantener un estado editorial común. Aplicar la validación de traducción alemana a rutas, listados, selector de idioma, sitemap y hreflang.
+- Validar los campos requeridos en español al publicar. Mantener un estado editorial común. Aplicar la validación de traducciones a rutas, listados, selector de idioma, sitemap y hreflang.
 
 ## Despliegue (por decidir)
 - Hosting compatible con Next.js + Payload, PostgreSQL gestionado, almacenamiento persistente multimedia, dominio y DNS.
